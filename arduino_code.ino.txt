@@ -1,0 +1,26 @@
+// arduino_code.ino
+const int LED_ROJO = 9;
+const int LED_VERDE = 10;
+char comando;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(LED_ROJO, OUTPUT);
+  pinMode(LED_VERDE, OUTPUT);
+  digitalWrite(LED_ROJO, LOW);
+  digitalWrite(LED_VERDE, LOW);
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    comando = Serial.read();
+    digitalWrite(LED_ROJO, LOW);
+    digitalWrite(LED_VERDE, LOW);
+    
+    if (comando == 'R') {
+      digitalWrite(LED_ROJO, HIGH);
+    } else if (comando == 'G') {
+      digitalWrite(LED_VERDE, HIGH);
+    }
+  }
+}
