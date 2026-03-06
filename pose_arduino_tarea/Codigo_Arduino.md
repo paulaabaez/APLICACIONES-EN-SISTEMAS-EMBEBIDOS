@@ -1,3 +1,4 @@
+```python
 // arduino_code.ino
 const int LED_ROJO = 9;
 const int LED_VERDE = 10;
@@ -23,4 +24,5 @@ void loop() {
       digitalWrite(LED_VERDE, HIGH);
     }
   }
+
 }
