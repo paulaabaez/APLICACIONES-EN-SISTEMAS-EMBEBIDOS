@@ -1,3 +1,4 @@
+```python
 """
 TAREA COMPLETA - Pose Detection con Arduino
 Autor: [PaulaBaez]
@@ -217,4 +218,5 @@ def main():
 # EJECUTAR
 # ============================================
 if __name__ == "__main__":
+
     main()
