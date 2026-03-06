@@ -1,3 +1,56 @@
+# Codigo phyton 
+
+Para llegar a este codigo se investgo la parte de MediaPipe y sus puntos para detectar la persona, en base a ello se genera el siguiente codigo, donde se hace un archivo en blog de notas con la extension .py para poder llamarlo o ejecutarlo en la terminal.
+En pocas palabras lo que hace en pasos resumidos es:
+
+# Resumen general del código (qué hace de principio a fin)
+## Importación de librerías: 
+Se importan `cv2` (OpenCV) para manejo de video, `mediapipe` para detección de pose, `serial` para comunicación con Arduino, `time` para pausas y `collections.Counter` para suavizar resultados.
+
+## Configuración inicial de MediaPipe: 
+Se inicializa el módulo de pose de MediaPipe y se crea un objeto Pose con parámetros específicos (modo de imagen, complejidad, suavizado, umbrales de confianza).
+
+## Conexión con Arduino: 
+Se intenta establecer comunicación serial con el Arduino en un puerto específico (COM4). Si falla, el programa continúa pero sin control de LEDs.
+
+## Función detectar_postura(landmarks): 
+Recibe los puntos clave (landmarks) de la persona y determina si está de pie o sentada comparando la altura (coordenada Y) de caderas y rodillas. También verifica visibilidad.
+
+## Función dibujar_info(frame, postura): 
+Dibuja en el frame un rectángulo con el estado de la postura y, si hay Arduino, el color del LED correspondiente.
+
+## Función principal `main()`:
+Abre la cámara web.
+
+Muestra instrucciones.
+
+Inicia un bucle continuo para leer frames de la cámara.
+### Por cada frame:
+
+Lo voltea horizontalmente (efecto espejo).
+
+Lo convierte a RGB (MediaPipe trabaja con RGB).
+
+Procesa con MediaPipe para obtener landmarks.
+
+Si detecta una persona, dibuja los puntos y conexiones.
+
+Llama a detectar_postura() para obtener la postura del frame actual.
+
+Mantiene un historial de las últimas 5 detecciones y usa Counter para elegir la más frecuente (suavizado).
+
+Si hay cambio de postura y Arduino está conectado, envía por serial 'R' (rojo) o 'G' (verde).
+
+Dibuja la información en pantalla con dibujar_info().
+
+Si no detecta persona, muestra mensaje "Sin persona".
+
+Espera la tecla 'q' para salir.
+
+Al salir, libera la cámara, cierra ventanas y cierra la conexión serial.
+
+Ejecución: Se llama a main() solo si el script se ejecuta directamente.
+
 ```python
 """
 TAREA COMPLETA - Pose Detection con Arduino
@@ -220,3 +273,4 @@ def main():
 if __name__ == "__main__":
 
     main()
+
