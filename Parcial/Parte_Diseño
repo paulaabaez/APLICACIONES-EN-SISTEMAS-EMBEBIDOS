@@ -1,33 +1,34 @@
 2.Plantee una solución paso a paso de las situaciones descritas con lo aprendido en clase:
-2.1¿Como plantearía el desarrollo de una base de datos con imágenes de los diferentes elementos de un laboratorio de telecomunicaciones?
+# Parte de Diseño - Laboratorio Inteligente
 
-Paso a Paso
- 
-Definición de Clases: Lo primero es listar y categorizar todos los elementos que se desean reconocer.
+## 2.1 Desarrollo de una base de datos con imágenes de los elementos del laboratorio
 
-Herramientas: Multímetros, Osciloscopios, Analizadores de Espectro, Generadores de Señales, Fuentes de Alimentación, Estaciones de Soldadura, Pinzas, Cortafrío, etc.
+### Paso 1: Definición de Clases
+Lo primero es listar y categorizar todos los elementos que se desean reconocer.
 
-Personas: Se pueden definir como una sola clase ("persona") o, si se requiere identificación, como clases individuales (ej. "Juan", "María").
+| Categoría | Elementos |
+|-----------|-----------|
+| **Herramientas** | Multímetros, Osciloscopios, Analizadores de Espectro, Generadores de Señales, Fuentes de Alimentación, Estaciones de Soldadura, Pinzas, Cortafrío |
+| **Personas** | Clase "persona" (o identificación individual: "Juan", "María") |
+| **Elementos Fijos** | Puertas, Mesas, Sillas (para contextualizar la escena) |
 
-Elementos Fijos: Puertas, Mesas, Sillas (útiles para contextualizar la escena).
+### Paso 2: Captura de Imágenes (Data Acquisition)
 
-Captura de Imágenes (Data Acquisition):
+| Técnica | Descripción |
+|---------|-------------|
+| **Fuentes Múltiples** | Usar cámara fija del laboratorio capturando en diferentes condiciones de iluminación (mañana, tarde, noche) y con diferentes ángulos de las herramientas (sobre la mesa, en la mano, en el estante) |
+| **Aumento de Datos** | Aplicar transformaciones con librerías como `imgaug` o `TensorFlow/Keras`: rotaciones leves, cambios de brillo, zoom, desplazamientos horizontales/verticales |
 
-Fuentes Múltiples: Usar la cámara que se instalará en el laboratorio (punto de vista fijo) para capturar imágenes en diferentes condiciones de iluminación (mañana, tarde, noche) y con diferentes ángulos de las herramientas (sobre la mesa, en la mano, en el estante).
+### Paso 3: Anotación de Imágenes (Labeling)
 
-Aumento de Datos (Data Augmentation): Para enriquecer el dataset sin tomar más fotos, se aplican transformaciones a las imágenes existentes usando librerías como imgaug o TensorFlow/Keras. Ej: rotaciones leves, cambios de brillo, zoom, desplazamientos horizontales/verticales. Esto ayuda al modelo a generalizar mejor.
+| Aspecto | Descripción |
+|---------|-------------|
+| **Formato** | Cada imagen necesita una etiqueta (ej. `osciloscopio_001.jpg` → clase: "osciloscopio") |
+| **Herramientas** | LabelImg o CVAT para dibujar bounding boxes |
+| **Salida** | Archivo XML o JSON por imagen |
 
-Anotación de Imágenes (Labeling):
+### Paso 4: Organización y Almacenamiento
 
-Para un sistema clasificador, cada imagen necesita una etiqueta (ej. osciloscopio_001.jpg -> clase: "osciloscopio").
-
-Herramientas de Anotación: Usar software como LabelImg o CVAT para dibujar recuadros (bounding boxes) alrededor de cada objeto y persona en la imagen, y asignarles la clase correspondiente. Este proceso genera un archivo (en formato XML o JSON) por imagen.
-
-Organización y Almacenamiento:
-
-Estructurar el dataset en carpetas. Por ejemplo:
-
-text
 dataset_laboratorio/
 ├── train/
 │   ├── osciloscopio/ (imagenes y anotaciones)
@@ -35,27 +36,25 @@ dataset_laboratorio/
 │   ├── persona/
 │   └── ...
 └── validation/ (misma estructura que train)
-Almacenar este dataset en un lugar accesible para el entrenamiento (disco duro local, o en la nube como Google Drive o AWS S3).
+**Almacenamiento:** Disco duro local o nube (Google Drive, AWS S3)
 
 2.2¿Como  crearía un sistema clasificador de elementos con la librería media pipe?
 
-Paso a Paso:
+### Paso a Paso
 
-Elección de la Tarea: Para identificar múltiples herramientas en una imagen, necesitamos detección de objetos (localizar y clasificar). MediaPipe Tasks ofrece una solución lista para esto.
+#### 1. Elección de la Tarea
+Para identificar múltiples herramientas se necesita **detección de objetos** (localizar y clasificar). MediaPipe Tasks ofrece solución para esto.
 
-Entrenamiento del Modelo (opcional pero recomendado):
+#### 2. Entrenamiento del Modelo
+| Aspecto | Descripción |
+|---------|-------------|
+| **Modelo** | SSD, EfficientDet-Lite |
+| **Dataset** | Usar el conjunto anotado del paso anterior |
+| **Formato** | Convertir a TFRecord (formato de TensorFlow) |
 
-Si el dataset es de herramientas específicas, se puede entrenar un modelo custom. MediaPipe ofrece herramientas para entrenar modelos de detección de objetos (basados en SSD, EfficientDet-Lite) usando el conjunto de datos anotado del paso anterior.
+#### 3. Implementación con MediaPipe Tasks
 
-Formato: El dataset debe convertirse al formato TFRecord, que es el que usa TensorFlow (el backend de MediaPipe) para el entrenamiento.
-
-Implementación con MediaPipe Tasks:
-
-Una vez entrenado el modelo (o usando uno pre-entrenado de la galería de MediaPipe si es suficiente), se utiliza la librería mediapipe en Python.
-
-Código Conceptual:
-
-python
+```python
 import mediapipe as mp
 from mediapipe.tasks import python
 from mediapipe.tasks.python.vision import ObjectDetector, RunningMode
@@ -63,7 +62,7 @@ from mediapipe.tasks.python.vision import ObjectDetector, RunningMode
 # Configurar el detector
 options = python.vision.ObjectDetectorOptions(
     base_options=python.BaseOptions(model_asset_path='modelo_herramientas.tflite'),
-    running_mode=RunningMode.IMAGE, # o VIDEO para detección continua
+    running_mode=RunningMode.IMAGE,  # o VIDEO para detección continua
     max_results=5,
     score_threshold=0.5)
 detector = ObjectDetector.create_from_options(options)
@@ -72,11 +71,10 @@ detector = ObjectDetector.create_from_options(options)
 image = mp.Image.create_from_file('imagen_laboratorio.jpg')
 detection_result = detector.detect(image)
 
-# Resultado: Lista de objetos detectados con bounding boxes y etiquetas (ej. "osciloscopio", "persona")
+# Resultado: Lista de objetos detectados
 for detection in detection_result.detections:
     print(detection.categories[0].category_name)
-Este sistema puede ejecutarse en el sistema embebido (si tiene capacidad, como una Raspberry Pi) o en un servidor central que reciba las imágenes.
-
+Ejecución: Puede correr en sistema embebido (Raspberry Pi) o servidor central.
 
 2.3¿Como reconocería el sistema la velocidad de las personas en el laboratorio?
 
@@ -101,3 +99,4 @@ Por otro lado, desarrollo una interfaz web sencilla con HTML, CSS y JavaScript. 
 Si quiero tener una aplicación móvil, desarrollo una app con Flutter o React Native que consuma la misma API. La lógica es la misma, solo que adaptada a una pantalla táctil. De esta forma, cualquier persona con acceso a la red del laboratorio puede abrir la app o la página web y ver en tiempo real lo que está pasando, qué herramientas hay sobre las mesas y si alguien se está moviendo de manera peligrosa.
 
 Este enfoque tiene la ventaja de que separa claramente la parte pesada del procesamiento de la parte liviana de visualización. Si después quiero agregar más funcionalidades, como guardar un histórico o generar reportes, puedo hacerlo sin afectar lo que ya funciona.
+
