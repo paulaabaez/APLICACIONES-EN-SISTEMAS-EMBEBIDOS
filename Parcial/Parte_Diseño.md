@@ -73,6 +73,7 @@ Una vez entrenado el modelo (o si se opta por usar uno pre-entrenado de la galer
 **Código Conceptual:**
 
 ```python
+
 import mediapipe as mp
 from mediapipe.tasks import python
 from mediapipe.tasks.python.vision import ObjectDetector, RunningMode
@@ -97,6 +98,8 @@ for detection in detection_result.detections:
     print(f"Objeto detectado: {detection.categories[0].category_name} "
           f"con una confianza de: {detection.categories[0].score:.2f}")
 Este sistema puede ejecutarse en el sistema embebido del laboratorio (si tiene suficiente capacidad, como una Raspberry Pi 4 o 5) o en un servidor central que reciba y procese las imágenes de la cámara.
+
+```
 
 ---
 ### 2.3 ¿Cómo reconocería el sistema la velocidad de las personas en el laboratorio?
