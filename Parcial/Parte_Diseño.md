@@ -184,7 +184,7 @@ Estructura básica:
 </body>
 </html>
 
-###4. Aplicación Móvil (Opcional)
+### 4. Aplicación Móvil (Opcional)
 Si se desea una experiencia nativa, se puede desarrollar una aplicación móvil con frameworks como Flutter o React Native. La lógica es la misma que la web: la aplicación consume los mismos endpoints de la API REST para obtener los datos del laboratorio y mostrarlos de forma adaptada a una pantalla táctil.
 
 Resumen de Tecnologías Utilizadas
