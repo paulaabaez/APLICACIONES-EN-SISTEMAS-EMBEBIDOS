@@ -98,32 +98,37 @@ for detection in detection_result.detections:
           f"con una confianza de: {detection.categories[0].score:.2f}")
 Este sistema puede ejecutarse en el sistema embebido del laboratorio (si tiene suficiente capacidad, como una Raspberry Pi 4 o 5) o en un servidor central que reciba y procese las imágenes de la cámara.
 
-2.3 ¿Cómo reconocería el sistema la velocidad de las personas en el laboratorio?
-Paso a Paso
+---
+### 2.3 ¿Cómo reconocería el sistema la velocidad de las personas en el laboratorio?
 
-1. Seguimiento de Personas (Tracking)
+**Paso a Paso**
+
+### 1. Seguimiento de Personas (Tracking)
 El detector de MediaPipe nos da la posición de una persona en un fotograma, pero no sabe si esa persona es la misma que aparecía en el fotograma anterior. Para lograr esto, necesitamos un algoritmo de seguimiento (tracker). Este asigna un identificador único (ID) a cada persona y va actualizando su posición a medida que se mueve. MediaPipe tiene trackers integrados, pero también se pueden usar implementaciones de OpenCV (como los trackers CSRT, KCF, etc.) para mayor control.
 
-2. Calibración Píxel-Metro
+### 2. Calibración Píxel-Metro
 Para convertir el movimiento en píxeles a una velocidad en el mundo real (m/s), es necesario calibrar la cámara. Una forma sencilla es usar un objeto de referencia de dimensiones conocidas.
 
 Ejemplo: Si sabemos que una puerta del laboratorio mide 2 metros de alto y en la imagen ocupa 400 píxeles, entonces, como aproximación inicial, cada píxel equivale a 2 m / 400 px = 0.005 m/px en esa zona. Este factor no es perfecto debido a la perspectiva, pero es suficiente para detectar movimientos bruscos.
 
-3. Cálculo de Velocidad
+### 3. Cálculo de Velocidad
 Con la trayectoria y la calibración, calculamos la velocidad instantánea entre fotogramas.
 Desplazamiento real (metros) = (Posición_actual_px - Posición_anterior_px) × Factor_escala (m/px)
 Tiempo transcurrido (segundos) = 1 / FPS de la cámara
 Velocidad (m/s) = Desplazamiento_real / Tiempo_transcurrido
-4. Definición de Umbral y Alerta
+
+### 4. Definición de Umbral y Alerta
 Finalmente, se define un umbral de velocidad considerado seguro o normal para el laboratorio (ej. 2 m/s, que es un paso rápido pero no una carrera). Si la velocidad calculada para una persona supera este umbral, el sistema activa una alerta. Esta alerta puede mostrarse en pantalla, guardarse en un archivo de registro (log) o incluso enviarse como notificación si el sistema está conectado a una red.
 
-2.4 ¿Cómo haría un despliegue en una plataforma web o móvil?
-Paso a Paso
+---
+## 2.4 ¿Cómo haría un despliegue en una plataforma web o móvil?
 
-1. Servidor de Procesamiento Local
+**Paso a Paso**
+
+### 1. Servidor de Procesamiento Local
 Una computadora en el laboratorio (conectada a la cámara) se encarga de todo el procesamiento pesado: ejecutar el modelo de MediaPipe para la detección, realizar el seguimiento de personas, calcular velocidades y generar alertas. En esta misma máquina, se levanta un servidor web ligero (por ejemplo, con Flask o FastAPI) que expone los datos a través de una API REST.
 
-2. API REST (Backend)
+### 2. API REST (Backend)
 La API tendrá varios endpoints que el frontend (web o móvil) podrá consultar:
 
 Endpoint	Descripción
@@ -133,7 +138,7 @@ Endpoint	Descripción
 /api/video/stream	Para servir el video en vivo
 Cada vez que se consulta un endpoint, el servidor responde con los datos en formato JSON.
 
-3. Interfaz Web (Frontend)
+### 3. Interfaz Web (Frontend)
 Se desarrolla una interfaz web sencilla con HTML, CSS y JavaScript.
 
 Estructura básica:
@@ -175,7 +180,8 @@ Estructura básica:
     </script>
 </body>
 </html>
-4. Aplicación Móvil (Opcional)
+
+###4. Aplicación Móvil (Opcional)
 Si se desea una experiencia nativa, se puede desarrollar una aplicación móvil con frameworks como Flutter o React Native. La lógica es la misma que la web: la aplicación consume los mismos endpoints de la API REST para obtener los datos del laboratorio y mostrarlos de forma adaptada a una pantalla táctil.
 
 Resumen de Tecnologías Utilizadas
@@ -186,4 +192,6 @@ Frontend Web	HTML, CSS, JavaScript
 App Móvil	Flutter / React Native
 Dataset	LabelImg, CVAT
 Seguimiento	OpenCV
+
+---
 De esta forma, cualquier persona con acceso a la red del laboratorio puede abrir la aplicación o la página web y ver, en tiempo real, qué está sucediendo, qué herramientas hay sobre las mesas y si alguien se está moviendo de manera peligrosa. La gran ventaja de este enfoque es la clara separación entre el procesamiento pesado (servidor local) y la visualización liviana (cliente web/móvil), lo que facilita el mantenimiento y la escalabilidad del sistema.
