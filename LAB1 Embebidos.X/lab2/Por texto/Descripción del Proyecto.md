@@ -79,3 +79,14 @@ verde encender
 verde apagar
 temperatura
 ```
+# Conclusión
+
+Este proyecto demuestra la integración entre **software y hardware**, permitiendo controlar dispositivos físicos mediante **chatbots en Python**.
+
+La implementación del control por voz muestra cómo tecnologías de **reconocimiento de voz** pueden aplicarse en sistemas embebidos para crear interfaces más naturales e intuitivas.
+
+---
+
+# Autor
+
+Proyecto desarrollado como práctica de **Sistemas Embebidos** utilizando Arduino y Python.
