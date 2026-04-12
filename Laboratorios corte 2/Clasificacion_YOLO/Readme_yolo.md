@@ -52,10 +52,14 @@ Verificar instalación:
 ```bash
 python --version
 
+---
+
 ## Instalación de Visual Studio Code
 
 - Descargar desde:
 - https://code.visualstudio.com/
+
+---
 
 ## Instalación de librerías
 
@@ -64,6 +68,8 @@ python --version
 - pip install numpy==1.26.4
 - pip install opencv-python==4.8.0.76
 - pip install ultralytics
+
+---
 
 # Estructura del proyecto
 
@@ -135,6 +141,8 @@ while True:
 cap.release()
 cv2.destroyAllWindows()
 
+---
+
 ## Funcionamiento del sistema
 
 1. Se activa la cámara del computador  
@@ -169,6 +177,7 @@ Guardar imágenes en la carpeta `imagenes`:
 imagenes/
  ├── resultado1.png
  └── resultado2.png
+---
 
 ## Problemas encontrados
 
@@ -199,4 +208,6 @@ El sistema permite detectar objetos en tiempo real de forma eficiente. Para mejo
 - Entrenamiento con dataset propio  
 - Mejora en detección de objetos pequeños  
 - Interfaz gráfica  
-- Guardado de resultados  
+- Guardado de resultados
+
+---
