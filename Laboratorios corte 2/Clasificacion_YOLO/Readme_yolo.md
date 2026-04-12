@@ -49,7 +49,7 @@ Descargar desde:
 https://www.python.org/
 
 Verificar instalación:
-```bash
+
 python --version
 
 ---
