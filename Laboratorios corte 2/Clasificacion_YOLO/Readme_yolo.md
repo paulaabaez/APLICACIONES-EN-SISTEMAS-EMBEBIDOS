@@ -86,8 +86,8 @@ import cv2
 from ultralytics import YOLO
 
 def clasificar_y_color(nombre):
-    if nombre == "person":
-        return "Persona", (0,255,0)
+   if nombre == "person":
+        return "Peaton de juguete", (0,255,0)
     
     elif nombre == "car":
         return "Carro de juguete", (255,0,0)
