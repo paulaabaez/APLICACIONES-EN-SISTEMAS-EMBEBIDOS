@@ -22,7 +22,7 @@ Desarrollar un sistema de detección y clasificación de objetos en tiempo real 
 ## Tecnologías utilizadas
 - Python 3.11
 - OpenCV
-- YOLOv8 (Ultralytics)
+- YOLOv8 
 - Visual Studio Code
 
 ---
