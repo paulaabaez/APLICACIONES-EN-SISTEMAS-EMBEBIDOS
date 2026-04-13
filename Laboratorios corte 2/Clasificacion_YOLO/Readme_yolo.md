@@ -142,7 +142,8 @@ cap.release()
 cv2.destroyAllWindows()
 
 ![evidencia codigo 1](https://github.com/user-attachments/assets/98a5c2af-e1df-4e56-a096-224af9e313f2)
-![evidencia codigo 2](https://github.com/user-attachments/assets/636b183a-5b0e-451f-b5c1-d18cfe9d6bc1)
+![evidencia codigo 2](https://github.com/user-attachments/assets/11baa424-81b5-438b-818f-5ac79954ebe8)
+
 ---
 
 ## Funcionamiento del sistema
