@@ -86,6 +86,7 @@ import cv2
 from ultralytics import YOLO
 
 def clasificar_y_color(nombre):
+
    if nombre == "person":
         return "Peaton de juguete", (0,255,0)
     
@@ -108,6 +109,7 @@ def clasificar_y_color(nombre):
         return None, None
 
 modelo = YOLO("yolov8s.pt")
+
 cap = cv2.VideoCapture(0)
 
 while True:
