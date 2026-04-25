@@ -176,12 +176,9 @@ cv2.destroyAllWindows()
 
 ## Imágenes del sistema
 
-Guardar imágenes en la carpeta `imagenes`:
+<img width="1854" height="1152" alt="Captura de pantalla 2026-04-19 220918" src="https://github.com/user-attachments/assets/5a52ac38-01a1-4351-805c-0eec515f3800" />
+<img width="1915" height="1129" alt="Captura de pantalla 2026-04-19 221006" src="https://github.com/user-attachments/assets/767cd3ad-d4da-4194-b1c3-36eed0f442b0" />
 
-imagenes/
- ├── resultado1.png
- └── resultado2.png
----
 
 ## Problemas encontrados
 
