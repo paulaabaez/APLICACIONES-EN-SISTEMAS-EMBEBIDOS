@@ -9,6 +9,7 @@ Este proyecto consiste en el desarrollo de un chatbot básico utilizando Streaml
 
 ###  Evidencia instalación de Streamlit
 
+<img width="1365" height="372" alt="1" src="https://github.com/user-attachments/assets/9755f022-4b06-49a5-a621-fdf78b71950a" />
 
 
 Comando utilizado:
@@ -22,6 +23,7 @@ Comando utilizado:
 
 ### Evidencia de la carpeta donde se guardó el archivo
 
+<img width="747" height="148" alt="2" src="https://github.com/user-attachments/assets/9f730433-7d6f-4fad-acf7-99f9a720b187" />
 
 
 Ruta del archivo:
@@ -34,6 +36,8 @@ C:\Users\Paula\OneDrive\Documentos
 
 ###  Evidencia de ejecución en terminal
 
+<img width="635" height="154" alt="3" src="https://github.com/user-attachments/assets/45765739-dc43-4f24-97a2-cda2d46e3f28" />
+
 
 Comando utilizado:
 
@@ -45,6 +49,8 @@ streamlit run app.py
 ##  Resultado en navegador
 
 ###  Evidencia del chatbot funcionando
+
+<img width="1365" height="680" alt="4" src="https://github.com/user-attachments/assets/4371dc0e-555f-4281-b7a2-ad0bcbab1bed" />
 
 
 ##  Código fuente
@@ -92,11 +98,11 @@ if user_input:
     st.session_state.messages.append({"role": "assistant", "content": response})
     st.chat_message("assistant").write(response)
 
-Despliegue en la nube
+## Despliegue en la nube
 
 Aplicación desplegada en Streamlit Cloud.
 
- Link del chatbot:
+- Link del chatbot:
 
 http://localhost:8501/
 
