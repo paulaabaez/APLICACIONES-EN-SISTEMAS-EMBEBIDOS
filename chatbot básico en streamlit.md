@@ -55,21 +55,22 @@ streamlit run app.py
 
 ##  Código fuente
 
+```python
 import streamlit as st
 
 st.set_page_config(page_title="Chatbot Sistemas Embebidos")
 
 st.title(" Chatbot de Sistemas Embebidos")
 
-#Historial del chat
+# Historial del chat
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-#Mostrar historial
+# Mostrar historial
 for msg in st.session_state.messages:
     st.chat_message(msg["role"]).write(msg["content"])
 
-#Entrada del usuario
+# Entrada del usuario
 user_input = st.chat_input("Haz una pregunta sobre sistemas embebidos...")
 
 if user_input:
@@ -97,6 +98,7 @@ if user_input:
 
     st.session_state.messages.append({"role": "assistant", "content": response})
     st.chat_message("assistant").write(response)
+```
 
 ## Despliegue en la nube
 
@@ -106,8 +108,8 @@ Aplicación desplegada en Streamlit Cloud.
 
 http://localhost:8501/
 
-Conclusiones
-Se logró implementar un chatbot funcional utilizando Streamlit.
-Se comprendió el uso de interfaces interactivas en Python.
-Se aplicaron conceptos básicos de sistemas embebidos.
-El sistema puede escalarse a inteligencia artificial.
+## Conclusiones
+-Se logró implementar un chatbot funcional utilizando Streamlit.
+-Se comprendió el uso de interfaces interactivas en Python.
+-Se aplicaron conceptos básicos de sistemas embebidos.
+-El sistema puede escalarse a inteligencia artificial.
