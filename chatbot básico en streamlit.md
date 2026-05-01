@@ -61,15 +61,15 @@ st.set_page_config(page_title="Chatbot Sistemas Embebidos")
 
 st.title(" Chatbot de Sistemas Embebidos")
 
-# Historial del chat
+#Historial del chat
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Mostrar historial
+#Mostrar historial
 for msg in st.session_state.messages:
     st.chat_message(msg["role"]).write(msg["content"])
 
-# Entrada del usuario
+#Entrada del usuario
 user_input = st.chat_input("Haz una pregunta sobre sistemas embebidos...")
 
 if user_input:
